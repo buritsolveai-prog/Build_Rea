@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxe Properties - Your Dream Home Awaits</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2C3E50;
+            --secondary: #E8B86D;
+            --accent: #8B4513;
+            --light: #F8F9FA;
+            --dark: #1A1A1A;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .hero {
+            height: 100vh;
+            background: url('images/modern-family-home-with-landscaped-yard.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            /* background: radial-gradient(circle at 30% 50%, rgba(102, 126, 234, 0.3), transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(118, 75, 162, 0.3), transparent 50%); */
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1.5s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease 0.3s backwards;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.6s backwards;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: var(--secondary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(232, 184, 109, 0.4);
+            animation: fadeInUp 1s ease 0.9s backwards;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(232, 184, 109, 0.6);
+        }
+
+        .section {
+            padding: 6rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .properties {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .property-img {
+            width: 100%;
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .property-img.property-1 {
+            background-image: url('https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80');
+        }
+        
+        .property-img.property-2 {
+            background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80');
+        }
+        
+        .property-img.property-3 {
+            background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80');
+        }
+
+        .property-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* background: linear-gradient(45deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8)); */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .property-card:hover .property-img::after {
+            opacity: 1;
+        }
+
+        .property-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            z-index: 10;
+        }
+
+        .property-info {
+            padding: 2rem;
+        }
+
+        .property-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .property-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .property-details {
+            display: flex;
+            gap: 1.5rem;
+            color: #666;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .property-details span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stats {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            animation: fadeInUp 1s ease;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact {
+            background: white;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 3rem auto;
+            padding: 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-animate.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.2rem; }
+            .nav-links { gap: 1rem; }
+            .section { padding: 3rem 5%; }
+            .property-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <nav>
+        <div class="logo">Luxe Properties</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#properties">Properties</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Find Your Dream Home</h1>
+            <p>Discover luxury properties in prime locations</p>
+            <a href="#properties" class="cta-btn">Explore Properties</a>
+        </div>
+    </section>
+
+    <section id="features" class="section">
+        <h2 class="section-title">Why Choose Luxe Properties</h2>
+        <div class="features">
+            <div class="feature-card scroll-animate">
+                <div class="feature-icon">🏡</div>
+                <h3>Premium Listings</h3>
+                <p>Access exclusive properties in the most sought-after neighborhoods worldwide</p>
+            </div>
+            <div class="feature-card scroll-animate">
+                <div class="feature-icon">💼</div>
+                <h3>Expert Agents</h3>
+                <p>Work with certified professionals who understand your unique needs</p>
+            </div>
+            <div class="feature-card scroll-animate">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure Process</h3>
+                <p>End-to-end encryption and verified listings for peace of mind</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="properties" class="section properties">
+        <h2 class="section-title">Featured Properties</h2>
+        <div class="property-grid">
+            <div class="property-card scroll-animate">
+                <div class="property-img property-1">
+                    <span class="property-badge">Featured</span>
+                </div>
+                <div class="property-info">
+                    <div class="property-price">$2,450,000</div>
+                    <h3 class="property-title">Modern Villa in Beverly Hills</h3>
+                    <p>Stunning contemporary home with panoramic city views</p>
+                    <div class="property-details">
+                        <span>🛏️ 5 Beds</span>
+                        <span>🚿 4 Baths</span>
+                        <span>📐 4,500 sqft</span>
+                    </div>
+                </div>
+            </div>
+            <div class="property-card scroll-animate">
+                <div class="property-img property-2">
+                    <span class="property-badge">New</span>
+                </div>
+                <div class="property-info">
+                    <div class="property-price">$1,875,000</div>
+                    <h3 class="property-title">Luxury Penthouse Manhattan</h3>
+                    <p>Exclusive penthouse with private rooftop terrace</p>
+                    <div class="property-details">
+                        <span>🛏️ 4 Beds</span>
+                        <span>🚿 3 Baths</span>
+                        <span>📐 3,200 sqft</span>
+                    </div>
+                </div>
+            </div>
+            <div class="property-card scroll-animate">
+                <div class="property-img property-3">
+                    <span class="property-badge">Hot</span>
+                </div>
+                <div class="property-info">
+                    <div class="property-price">$3,200,000</div>
+                    <h3 class="property-title">Beachfront Estate Miami</h3>
+                    <p>Magnificent oceanfront property with private beach</p>
+                    <div class="property-details">
+                        <span>🛏️ 6 Beds</span>
+                        <span>🚿 5 Baths</span>
+                        <span>📐 6,800 sqft</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section stats">
+        <h2 class="section-title" style="color: white;">Our Track Record</h2>
+        <div class="stats-grid">
+            <div class="stat-item scroll-animate">
+                <div class="stat-number">2,500+</div>
+                <p>Properties Sold</p>
+            </div>
+            <div class="stat-item scroll-animate">
+                <div class="stat-number">98%</div>
+                <p>Client Satisfaction</p>
+            </div>
+            <div class="stat-item scroll-animate">
+                <div class="stat-number">15+</div>
+                <p>Years Experience</p>
+            </div>
+            <div class="stat-item scroll-animate">
+                <div class="stat-number">50+</div>
+                <p>Expert Agents</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <form class="contact-form scroll-animate">
+            <div class="form-group">
+                <input type="text" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" placeholder="Phone Number">
+            </div>
+            <div class="form-group">
+                <textarea placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Luxe Properties. All rights reserved.</p>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- CHAT WIDGET -->
+    <!-- ============================================ -->
+
+    <div id="burit-chat-widget-root"></div>
+
+    <script>
+        (function() {
+            'use strict';
+            
+            const WIDGET_CONFIG = {
+                apiEndpoint: 'https://buritai.hopto.org/webhook/fbb3e9b4-d9bd-445e-be25-fcf03ae34026',
+                primaryColor: '#6366f1',
+                secondaryColor: '#8b5cf6',
+                suggestions: [
+                    '🏠 Show me available properties',
+                    '📞 Contact information'
+                ],
+                welcomeMessage: 'Hi! I\'m your real estate assistant. How can I help you today?',
+                brandName: 'burit.ai',
+                brandUrl: 'http://rea-buritai.duckdns.org/'
+            };
+            
+            const widgetRoot = document.getElementById('burit-chat-widget-root');
+            const shadowRoot = widgetRoot.attachShadow({ mode: 'open' });
+            
+            const widgetTemplate = `
+                <style>
+                    :host { all: initial; display: block; }
+                    * { box-sizing: border-box !important; margin: 0 !important; padding: 0 !important; border: 0 !important; font-size: 100% !important; font: inherit !important; vertical-align: baseline !important; }
+                    .burit-widget-container { position: fixed !important; bottom: 20px !important; right: 20px !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important; z-index: 2147483647 !important; line-height: 1.5 !important; -webkit-font-smoothing: antialiased !important; }
+                    .burit-chat-button { width: 60px !important; height: 60px !important; border-radius: 50% !important; background: linear-gradient(135deg, ${WIDGET_CONFIG.primaryColor} 0%, ${WIDGET_CONFIG.secondaryColor} 100%) !important; border: none !important; cursor: pointer !important; box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4) !important; display: flex !important; align-items: center !important; justify-content: center !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; position: relative !important; overflow: hidden !important; }
+                    .burit-chat-button:hover { transform: scale(1.1) !important; box-shadow: 0 6px 30px rgba(99, 102, 241, 0.6) !important; }
+                    .burit-chat-button:active { transform: scale(0.95) !important; }
+                    .burit-chat-button svg { width: 28px !important; height: 28px !important; fill: white !important; transition: transform 0.3s ease !important; }
+                    .burit-chat-button.active svg { transform: rotate(180deg) !important; }
+                    .burit-notification-badge { position: absolute !important; top: -5px !important; right: -5px !important; width: 20px !important; height: 20px !important; background: #ef4444 !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 11px !important; font-weight: 700 !important; color: white !important; animation: burit-pulse 2s infinite !important; }
+                    @keyframes burit-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+                    .burit-chat-window { position: absolute !important; bottom: 80px !important; right: 0 !important; width: 380px !important; max-width: calc(100vw - 40px) !important; height: 600px !important; max-height: calc(100vh - 120px) !important; background: white !important; border-radius: 20px !important; box-shadow: 0 10px 50px rgba(0, 0, 0, 0.15) !important; display: flex !important; flex-direction: column !important; opacity: 0 !important; transform: scale(0.8) translateY(20px) !important; pointer-events: none !important; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; }
+                    .burit-chat-window.active { opacity: 1 !important; transform: scale(1) translateY(0) !important; pointer-events: all !important; }
+                    .burit-chat-header { background: linear-gradient(135deg, ${WIDGET_CONFIG.primaryColor} 0%, ${WIDGET_CONFIG.secondaryColor} 100%) !important; color: white !important; padding: 20px !important; border-radius: 20px 20px 0 0 !important; display: flex !important; align-items: center !important; justify-content: space-between !important; flex-shrink: 0 !important; }
+                    .burit-chat-header-info { display: flex !important; align-items: center !important; gap: 12px !important; }
+                    .burit-chat-avatar { width: 40px !important; height: 40px !important; background: white !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 20px !important; flex-shrink: 0 !important; }
+                    .burit-chat-header-text { display: block !important; }
+                    .burit-chat-header-text h3 { font-size: 16px !important; font-weight: 600 !important; margin-bottom: 2px !important; line-height: 1.2 !important; }
+                    .burit-chat-header-text p { font-size: 12px !important; opacity: 0.9 !important; line-height: 1.2 !important; }
+                    .burit-chat-close { background: rgba(255, 255, 255, 0.2) !important; border: none !important; width: 30px !important; height: 30px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; transition: background 0.2s ease !important; flex-shrink: 0 !important; }
+                    .burit-chat-close:hover { background: rgba(255, 255, 255, 0.3) !important; }
+                    .burit-chat-close svg { width: 16px !important; height: 16px !important; fill: white !important; }
+                    .burit-chat-messages { flex: 1 !important; padding: 20px !important; overflow-y: auto !important; overflow-x: hidden !important; display: flex !important; flex-direction: column !important; gap: 16px !important; background: #f8f9fa !important; }
+                    .burit-chat-messages::-webkit-scrollbar { width: 6px !important; }
+                    .burit-chat-messages::-webkit-scrollbar-track { background: transparent !important; }
+                    .burit-chat-messages::-webkit-scrollbar-thumb { background: #cbd5e1 !important; border-radius: 3px !important; }
+                    .burit-message { display: flex !important; gap: 10px !important; animation: burit-messageSlideIn 0.3s ease !important; align-items: flex-start !important; }
+                    @keyframes burit-messageSlideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+                    .burit-message.user { flex-direction: row-reverse !important; }
+                    .burit-message-avatar { width: 32px !important; height: 32px !important; border-radius: 50% !important; background: linear-gradient(135deg, ${WIDGET_CONFIG.primaryColor} 0%, ${WIDGET_CONFIG.secondaryColor} 100%) !important; display: flex !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; font-size: 16px !important; }
+                    .burit-message.user .burit-message-avatar { background: #e2e8f0 !important; }
+                    .burit-message-content { max-width: 75% !important; display: block !important; }
+                    .burit-message-bubble { padding: 12px 16px !important; border-radius: 18px !important; font-size: 14px !important; line-height: 1.5 !important; word-wrap: break-word !important; display: block !important; }
+                    .burit-message.bot .burit-message-bubble { background: white !important; color: #1e293b !important; border-bottom-left-radius: 4px !important; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important; }
+                    .burit-message.user .burit-message-bubble { background: linear-gradient(135deg, ${WIDGET_CONFIG.primaryColor} 0%, ${WIDGET_CONFIG.secondaryColor} 100%) !important; color: white !important; border-bottom-right-radius: 4px !important; }
+                    .burit-message-time { font-size: 11px !important; color: #94a3b8 !important; margin-top: 4px !important; padding-left: 4px !important; padding-right: 4px !important; display: block !important; }
+                    .burit-typing-indicator { display: flex !important; gap: 4px !important; padding: 12px 16px !important; background: white !important; border-radius: 18px !important; border-bottom-left-radius: 4px !important; width: fit-content !important; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important; }
+                    .burit-typing-dot { width: 8px !important; height: 8px !important; background: #cbd5e1 !important; border-radius: 50% !important; animation: burit-typingBounce 1.4s infinite !important; display: block !important; }
+                    .burit-typing-dot:nth-child(2) { animation-delay: 0.2s !important; }
+                    .burit-typing-dot:nth-child(3) { animation-delay: 0.4s !important; }
+                    @keyframes burit-typingBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-10px); } }
+                    .burit-suggestions { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; padding: 16px 20px !important; background: #f8f9fa !important; flex-shrink: 0 !important; }
+                    .burit-suggestion-btn { padding: 10px 16px !important; background: white !important; border: 1px solid #e2e8f0 !important; border-radius: 20px !important; font-size: 13px !important; cursor: pointer !important; transition: all 0.2s ease !important; color: #475569 !important; font-weight: 500 !important; line-height: 1.2 !important; display: inline-block !important; }
+                    .burit-suggestion-btn:hover { background: linear-gradient(135deg, ${WIDGET_CONFIG.primaryColor} 0%, ${WIDGET_CONFIG.secondaryColor} 100%) !important; color: white !important; border-color: transparent !important; transform: translateY(-2px) !important; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important; }
+                    .burit-chat-input-wrapper { padding: 16px 20px !important; background: white !important; border-top: 1px solid #e2e8f0 !important; flex-shrink: 0 !important; }
+                    .burit-chat-input-container { display: flex !important; gap: 10px !important; align-items: flex-end !important; }
+                    .burit-chat-input { flex: 1 !important; padding: 12px 16px !important; border: 2px solid #e2e8f0 !important; border-radius: 24px !important; font-size: 14px !important; outline: none !important; resize: none !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important; transition: border-color 0.2s ease !important; max-height: 100px !important; min-height: 44px !important; line-height: 1.5 !important; color: #1e293b !important; background: white !important; }
+                    .burit-chat-input:focus { border-color: ${WIDGET_CONFIG.primaryColor} !important; }
+                    .burit-chat-input::placeholder { color: #94a3b8 !important; }
+                    .burit-chat-send { width: 44px !important; height: 44px !important; background: linear-gradient(135deg, ${WIDGET_CONFIG.primaryColor} 0%, ${WIDGET_CONFIG.secondaryColor} 100%) !important; border: none !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; transition: all 0.2s ease !important; flex-shrink: 0 !important; }
+                    .burit-chat-send:hover { transform: scale(1.05) !important; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4) !important; }
+                    .burit-chat-send:active { transform: scale(0.95) !important; }
+                    .burit-chat-send:disabled { opacity: 0.5 !important; cursor: not-allowed !important; }
+                    .burit-chat-send svg { width: 20px !important; height: 20px !important; fill: white !important; }
+                    .burit-powered-by { text-align: center !important; padding: 12px !important; font-size: 12px !important; color: #94a3b8 !important; background: white !important; border-radius: 0 0 20px 20px !important; flex-shrink: 0 !important; line-height: 1.2 !important; }
+                    .burit-powered-by a { color: ${WIDGET_CONFIG.primaryColor} !important; text-decoration: none !important; font-weight: 600 !important; transition: color 0.2s ease !important; }
+                    .burit-powered-by a:hover { color: ${WIDGET_CONFIG.secondaryColor} !important; text-decoration: underline !important; }
+                    @media (max-width: 480px) {
+                        .burit-widget-container { bottom: 10px !important; right: 10px !important; }
+                        .burit-chat-window { width: calc(100vw - 20px) !important; height: calc(100vh - 100px) !important; bottom: 70px !important; right: -10px !important; }
+                        .burit-chat-button { width: 56px !important; height: 56px !important; }
+                    }
+            </style>
+            
+            <div class="burit-widget-container">
+                <button class="burit-chat-button" id="burit-chat-toggle" aria-label="Open chat">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+                    </svg>
+                    <span class="burit-notification-badge" id="burit-notification" style="display: none;">1</span>
+                </button>
+                
+                <div class="burit-chat-window" id="burit-chat-window">
+                    <div class="burit-chat-header">
+                        <div class="burit-chat-header-info">
+                            <div class="burit-chat-avatar">🤖</div>
+                            <div class="burit-chat-header-text">
+                                <h3>AI Assistant</h3>
+                                <p>Online now</p>
+                            </div>
+                        </div>
+                        <button class="burit-chat-close" id="burit-chat-close" aria-label="Close chat">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="burit-chat-messages" id="burit-chat-messages"></div>
+                    <div class="burit-suggestions" id="burit-suggestions"></div>
+                    
+                    <div class="burit-chat-input-wrapper">
+                        <div class="burit-chat-input-container">
+                            <textarea class="burit-chat-input" id="burit-chat-input" placeholder="Type your message..." rows="1"></textarea>
+                            <button class="burit-chat-send" id="burit-chat-send" aria-label="Send message">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="burit-powered-by">
+                        Powered by <a href="${WIDGET_CONFIG.brandUrl}" target="_blank" rel="noopener noreferrer">${WIDGET_CONFIG.brandName}</a>
+                    </div>
+                </div>
+            </div>
+        `;
+            
+            shadowRoot.innerHTML = widgetTemplate;
+            
+            const chatToggle = shadowRoot.getElementById('burit-chat-toggle');
+            const chatWindow = shadowRoot.getElementById('burit-chat-window');
+            const chatClose = shadowRoot.getElementById('burit-chat-close');
+            const chatMessages = shadowRoot.getElementById('burit-chat-messages');
+            const chatInput = shadowRoot.getElementById('burit-chat-input');
+            const chatSend = shadowRoot.getElementById('burit-chat-send');
+            const suggestionsContainer = shadowRoot.getElementById('burit-suggestions');
+            const notificationBadge = shadowRoot.getElementById('burit-notification');
+            
+            let isOpen = false;
+            let messageHistory = [];
+            
+            // ============================
+            // HTML + Markdown helpers
+            // ============================
+            function escapeHtml(text) {
+                if (text == null) return '';
+                return text
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            // Very small Markdown → HTML converter for our use-case
+            function markdownToHtml(text) {
+                if (!text) return '';
+
+                // Convert literal "\n" to real newlines
+                text = String(text).replace(/\\n/g, '\n');
+
+                const lines = text.split('\n');
+                let html = [];
+                let inList = false;
+
+                function inlineFormat(str) {
+                    // First escape HTML to prevent XSS
+                    let s = escapeHtml(str);
+                    
+                    // Bold: **text** or __text__
+                    s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                    s = s.replace(/__(.+?)__/g, '<strong>$1</strong>');
+                    
+                    // Italic: *text* or _text_ (but not if it's part of **)
+                    s = s.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
+                    s = s.replace(/(?<!_)_(?!_)(.+?)(?<!_)_(?!_)/g, '<em>$1</em>');
+                    
+                    return s;
+                }
+
+                for (let raw of lines) {
+                    const line = raw.trim();
+
+                    if (!line) {
+                        // Close list on blank line
+                        if (inList) {
+                            html.push('</ul>');
+                            inList = false;
+                        }
+                        html.push('<br>');
+                        continue;
+                    }
+
+                    // Bullet list: * item, - item, or • item
+                    if (/^[\*\-•]\s+/.test(line)) {
+                        if (!inList) {
+                            html.push('<ul style="margin: 8px 0 !important; padding-left: 20px !important;">');
+                            inList = true;
+                        }
+                        const itemText = line.replace(/^[\*\-•]\s+/, '');
+                        html.push('<li style="margin: 4px 0 !important;">' + inlineFormat(itemText) + '</li>');
+                        continue;
+                    }
+
+                    // Close list if line doesn't continue it
+                    if (inList) {
+                        html.push('</ul>');
+                        inList = false;
+                    }
+
+                    // Headings: ### Text, ## Text, # Text
+                    const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
+                    if (headingMatch) {
+                        const level = headingMatch[1].length;
+                        const headingText = headingMatch[2];
+                        const fontSize = level === 1 ? '18px' : level === 2 ? '16px' : '14px';
+                        html.push(`<div style="font-size: ${fontSize} !important; font-weight: 700 !important; margin: 8px 0 4px 0 !important;">${inlineFormat(headingText)}</div>`);
+                        continue;
+                    }
+
+                    // Regular paragraph
+                    html.push('<div style="margin: 4px 0 !important;">' + inlineFormat(line) + '</div>');
+                }
+
+                // Close any open list
+                if (inList) {
+                    html.push('</ul>');
+                }
+
+                return html.join('');
+            }
+
+            function userTextToHtml(text) {
+                if (!text) return '';
+                let t = String(text).replace(/\\n/g, '\n');
+                t = escapeHtml(t);
+                return t.replace(/\n/g, '<br>');
+            }
+
+            // NEW: format raw n8n output into final HTML
+            function formatN8NResponse(raw) {
+                if (!raw) return '';
+
+                // normalise object → string if needed
+                if (typeof raw === 'object') {
+                    if (raw.output) raw = raw.output;
+                    else if (raw.text) raw = raw.text;
+                    else if (raw.message) raw = raw.message;
+                    else raw = JSON.stringify(raw);
+                }
+
+                const text = String(raw).replace(/\\n/g, '\n').trim();
+                return markdownToHtml(text);
+            }
+
+            // ============================
+            // Add message (supports HTML from formatter)
+            // ============================
+            function addMessage(text, isUser = false, isHtml = false) {
+                let htmlText;
+
+                if (isUser) {
+                    htmlText = userTextToHtml(text);
+                } else {
+                    htmlText = isHtml ? text : markdownToHtml(text);
+                }
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `burit-message ${isUser ? 'user' : 'bot'}`;
+                messageDiv.innerHTML = `
+                    <div class="burit-message-avatar">${isUser ? '👤' : '🤖'}</div>
+                    <div class="burit-message-content">
+                        <div class="burit-message-bubble">${htmlText}</div>
+                        <div class="burit-message-time">${formatTime()}</div>
+                    </div>
+                `;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                messageHistory.push({ text, isUser, timestamp: new Date() });
+            }
+            
+            function toggleChat() {
+                isOpen = !isOpen;
+                chatWindow.classList.toggle('active');
+                chatToggle.classList.toggle('active');
+                if (isOpen) {
+                    chatInput.focus();
+                    notificationBadge.style.display = 'none';
+                }
+            }
+            
+            function formatTime() {
+                const now = new Date();
+                return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            }
+            
+            function showTyping() {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'burit-message bot';
+                typingDiv.id = 'burit-typing';
+                typingDiv.innerHTML = `
+                    <div class="burit-message-avatar">🤖</div>
+                    <div class="burit-message-content">
+                        <div class="burit-typing-indicator">
+                            <div class="burit-typing-dot"></div>
+                            <div class="burit-typing-dot"></div>
+                            <div class="burit-typing-dot"></div>
+                        </div>
+                    </div>
+                `;
+                chatMessages.appendChild(typingDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function removeTyping() {
+                const typingDiv = shadowRoot.getElementById('burit-typing');
+                if (typingDiv) typingDiv.remove();
+            }
+            
+            async function sendMessageToAPI(message) {
+                try {
+                    const response = await fetch(WIDGET_CONFIG.apiEndpoint, {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: message,
+                            timestamp: new Date().toISOString(),
+                            sessionId: getSessionId(),
+                            source: 'chat-widget'
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API request failed with status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    console.log('Webhook response:', data);
+
+                    if (data.output) {
+                        return data.output;
+                    } else if (data.response) {
+                        return data.response;
+                    } else if (data.message) {
+                        return data.message;
+                    } else if (data.text) {
+                        return data.text;
+                    } else if (typeof data === 'string') {
+                        return data;
+                    } else {
+                        console.warn('Unexpected response format:', data);
+                        return 'I received your message, but the response format was unexpected.';
+                    }
+                } catch (error) {
+                    console.error('Chat widget API error:', error);
+                    return 'Sorry, I\'m having trouble connecting right now. Please try again in a moment.';
+                }
+            }
+            
+            function getSessionId() {
+                let sessionId = sessionStorage.getItem('burit-chat-session');
+                if (!sessionId) {
+                    sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                    sessionStorage.setItem('burit-chat-session', sessionId);
+                }
+                return sessionId;
+            }
+            
+            async function handleSendMessage() {
+                const message = chatInput.value.trim();
+                if (!message) return;
+                addMessage(message, true);
+                chatInput.value = '';
+                chatInput.style.height = 'auto';
+                if (messageHistory.filter(m => m.isUser).length === 1) {
+                    suggestionsContainer.style.display = 'none';
+                }
+                showTyping();
+                chatInput.disabled = true;
+                chatSend.disabled = true;
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                const rawResponse = await sendMessageToAPI(message);
+                removeTyping();
+
+                // 🔥 format n8n response (Markdown → HTML)
+                const formattedHtml = formatN8NResponse(rawResponse);
+                addMessage(formattedHtml, false, true);
+
+                chatInput.disabled = false;
+                chatSend.disabled = false;
+                chatInput.focus();
+            }
+            
+            function handleSuggestionClick(suggestionText) {
+                const cleanText = suggestionText.replace(/[^\w\s?]/gi, '').trim();
+                chatInput.value = cleanText;
+                handleSendMessage();
+            }
+            
+            function initSuggestions() {
+                WIDGET_CONFIG.suggestions.forEach(suggestion => {
+                    const button = document.createElement('button');
+                    button.className = 'burit-suggestion-btn';
+                    button.textContent = suggestion;
+                    button.onclick = () => handleSuggestionClick(suggestion);
+                    suggestionsContainer.appendChild(button);
+                });
+            }
+            
+            function initChat() {
+                addMessage(WIDGET_CONFIG.welcomeMessage, false);
+                initSuggestions();
+            }
+            
+            chatInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+            });
+            
+            chatToggle.addEventListener('click', toggleChat);
+            chatClose.addEventListener('click', toggleChat);
+            chatSend.addEventListener('click', handleSendMessage);
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage();
+                }
+            });
+            
+            initChat();
+            
+            setTimeout(() => { if (!isOpen) toggleChat(); }, 2000);
+            setTimeout(() => { if (!isOpen) notificationBadge.style.display = 'flex'; }, 3000);
+        })();
+    </script>
+
+    <!-- ============================================ -->
+    <!-- PAGE SCRIPTS -->
+    <!-- ============================================ -->
+
+    <script>
+        const scrollElements = document.querySelectorAll('.scroll-animate');
+        
+        const elementInView = (el, dividend = 1) => {
+            const elementTop = el.getBoundingClientRect().top;
+            return elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend;
+        };
+
+        const displayScrollElement = (element) => {
+            element.classList.add('active');
+        };
+
+        const handleScrollAnimation = () => {
+            scrollElements.forEach((el) => {
+                if (elementInView(el, 1.25)) {
+                    displayScrollElement(el);
+                }
+            });
+        };
+
+        window.addEventListener('scroll', () => {
+            handleScrollAnimation();
+        });
+
+        handleScrollAnimation();
+
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! Our team will contact you soon.');
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
