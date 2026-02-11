@@ -1,0 +1,1192 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -3792,
+        192
+      ],
+      "id": "920b25ca-0dc5-4474-b262-5d73c6cfc5e6",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -4208,
+        208
+      ],
+      "id": "471ee1f5-f0ba-476d-9334-f5e4c7b661cd",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -3344,
+        224
+      ],
+      "id": "2f716714-af9f-4861-b7ed-8cd66c6f77e5",
+      "name": "Simple Vector Store"
+    },
+    {
+      "parameters": {
+        "public": true,
+        "mode": "webhook",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -2736,
+        -48
+      ],
+      "id": "956e4732-3a96-41be-b104-74b36ace5d4a",
+      "name": "When chat message received",
+      "webhookId": "89e8b6ae-bd1f-47f2-bafc-76b1c9e450fa"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful real estate agent made to answer user queries, only based on the information available though query data tool about the projects. \nFirst step is to ask the user about his/her name and phone number and then only proceed with further conversation. Try to keep the answers concise and properly structured for easier readability and good impression from sales perspective. Don't hallucinate away from the information which is availabe from the query data tool."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -2432,
+        96
+      ],
+      "id": "54f0da5e-fbec-4289-b4e5-607ae89fa2e3",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "REA",
+        "toolDescription": "You the data to answer the queries in a short manner.",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        },
+        "topK": 10,
+        "includeDocumentMetadata": false
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.2,
+      "position": [
+        -2208,
+        432
+      ],
+      "id": "8b0a5fca-10a9-4d9f-a0ab-8c1ffe561686",
+      "name": "Query Data Tool"
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $('Extract from File').item.json.text }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        -2784,
+        384
+      ],
+      "id": "efd8dc86-e75d-450b-a71c-ccf8d4985fa6",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -2352,
+        320
+      ],
+      "id": "c6c93d20-4cfa-471c-a156-831b0c4a2533",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -2608,
+        336
+      ],
+      "id": "f2a2e441-4d28-406d-a141-85033b4d0640",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "KEcaQpeVEPIHqFUS",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -2832,
+        576
+      ],
+      "id": "4dc47777-0ae0-4294-81fe-b13bb16082d7",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "KEcaQpeVEPIHqFUS",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "184EK48RuNWcZSHW1M5ChegJMIIco4a76",
+          "mode": "list",
+          "cachedResultName": "Demo Brouchere.pdf",
+          "cachedResultUrl": "https://drive.google.com/file/d/184EK48RuNWcZSHW1M5ChegJMIIco4a76/view?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -4000,
+        208
+      ],
+      "id": "b332fbed-6e45-4879-9a59-a2fc8d27b284",
+      "name": "Download file",
+      "credentials": {
+        "googleApi": {
+          "id": "YgbgMaG6KxAvpAqU",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1UKvfVZDCo8TPTq3W_W4x6wcziVSJSXHhdQmxLSx-nZo",
+          "mode": "list",
+          "cachedResultName": "Real_Estate_Listings",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UKvfVZDCo8TPTq3W_W4x6wcziVSJSXHhdQmxLSx-nZo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1704424268,
+          "mode": "list",
+          "cachedResultName": "Conversations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UKvfVZDCo8TPTq3W_W4x6wcziVSJSXHhdQmxLSx-nZo/edit#gid=1704424268"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "user_message",
+              "displayName": "user_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ai_response",
+              "displayName": "ai_response",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "formatted_time",
+              "displayName": "formatted_time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "from_whatsapp",
+              "displayName": "from_whatsapp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        -1552,
+        -64
+      ],
+      "id": "2132c07a-04bd-4992-8a2d-97d96e8c9241",
+      "name": "Store in Conversations Sheet",
+      "credentials": {
+        "googleApi": {
+          "id": "YgbgMaG6KxAvpAqU",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session_id",
+              "name": "session_id",
+              "value": "={{ $('Input Fields').item.json.sessionId }}",
+              "type": "string"
+            },
+            {
+              "id": "user_message",
+              "name": "user_message",
+              "value": "={{ $('Input Fields').item.json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "ai_response",
+              "name": "ai_response",
+              "value": "={{ $('AI Agent').item.json.output }}",
+              "type": "string"
+            },
+            {
+              "id": "timestamp",
+              "name": "timestamp",
+              "value": "={{ new Date().toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "formatted_time",
+              "name": "formatted_time",
+              "value": "={{ new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1856,
+        64
+      ],
+      "id": "a0eff88e-31ef-4e3b-99be-be8957b7537b",
+      "name": "Extract Conversation Data1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a Real Estate Lead extractor agent, you need to extract lead information from the conversation data using Read Conversation Tool for sessionId = {{ $json.session_id }}.\nIn case of whatsapp message we are also having phone number as {{$if( $(\"WhatsApp Trigger\").isExecuted, $('WhatsApp Trigger').item.json.messages[0].from, \"\")  }}  and user_name as {{ $if( $(\"WhatsApp Trigger\").isExecuted, $('WhatsApp Trigger').item.json.contacts[0].profile.name, \"\")  }}. You can use these values if these are some valid values.\nThen, for same session id, You need to store/update the lead summary using lead summary update tool. Make sure to include every important information from the conversation and keep the summary concise and to the point to capture the intent of the customer/lead from a sales perpective.\nTry to map session Id with the contact information received and assign a lead score based on the potential of sales from that lead. The score should be between 1 to 100.",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -1136,
+        -16
+      ],
+      "id": "03cb8320-661e-4711-8174-3467d948fd47",
+      "name": "Summary Agent"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1UKvfVZDCo8TPTq3W_W4x6wcziVSJSXHhdQmxLSx-nZo",
+          "mode": "list",
+          "cachedResultName": "Real_Estate_Listings",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UKvfVZDCo8TPTq3W_W4x6wcziVSJSXHhdQmxLSx-nZo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 219745888,
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UKvfVZDCo8TPTq3W_W4x6wcziVSJSXHhdQmxLSx-nZo/edit#gid=219745888"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Name', ``, 'string') }}",
+            "Phone number": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Phone_number__using_to_match_', ``, 'string') }}",
+            "Email": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Email', ``, 'string') }}",
+            "Budget min": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Budget_min', ``, 'string') }}",
+            "budget max": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('budget_max', ``, 'string') }}",
+            "lead score": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('lead_score', ``, 'string') }}",
+            "coversation summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('coversation_summary', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "Phone number"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone number",
+              "displayName": "Phone number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Budget min",
+              "displayName": "Budget min",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "budget max",
+              "displayName": "budget max",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lead score",
+              "displayName": "lead score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "coversation summary",
+              "displayName": "coversation summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        -944,
+        240
+      ],
+      "id": "bed8739a-6589-48c5-a846-21229ea88748",
+      "name": "Lead Summary Update",
+      "credentials": {
+        "googleApi": {
+          "id": "YgbgMaG6KxAvpAqU",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "1UKvfVZDCo8TPTq3W_W4x6wcziVSJSXHhdQmxLSx-nZo",
+          "mode": "list",
+          "cachedResultName": "Real_Estate_Listings",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UKvfVZDCo8TPTq3W_W4x6wcziVSJSXHhdQmxLSx-nZo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1704424268,
+          "mode": "list",
+          "cachedResultName": "Conversations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UKvfVZDCo8TPTq3W_W4x6wcziVSJSXHhdQmxLSx-nZo/edit#gid=1704424268"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        -752,
+        288
+      ],
+      "id": "5b762d23-ef23-4be2-b15f-e5b6f943e296",
+      "name": "Read Conversation",
+      "credentials": {
+        "googleApi": {
+          "id": "YgbgMaG6KxAvpAqU",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1264,
+        192
+      ],
+      "id": "1ec56f5e-6403-4326-b109-58348d198328",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "KEcaQpeVEPIHqFUS",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b4b33a28-79fd-4805-80a6-c14d30531957",
+              "name": "output",
+              "value": "={{ $('AI Agent').item.json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -448,
+        16
+      ],
+      "id": "a1149d32-26f0-4d4f-843b-8c5f72ea9ff9",
+      "name": "Final Output"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {
+          "messageStatusUpdates": []
+        }
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -2928,
+        -304
+      ],
+      "id": "d99fe82b-77e2-4765-91de-f2f6338f7cab",
+      "name": "WhatsApp Trigger",
+      "webhookId": "a133cff3-0a62-48df-84e5-14a3c4eec1ee",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "XiOOg64TXvSf4wb1",
+          "name": "WhatsApp OAuth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "706316552574079",
+        "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+        "textBody": "={{ $('AI Agent1').item.json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -1920,
+        -416
+      ],
+      "id": "d4c6d61e-2000-4986-a462-9a42fe088802",
+      "name": "Send message",
+      "webhookId": "4bc74bb0-68a8-4f2b-a927-03d441a3682c",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "0D9GyIUmOsFhJUOK",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0e522bb6-8e86-4d80-ac73-dbe87826b7bb",
+              "leftValue": "={{ $if( $(\"WhatsApp Trigger\").isExecuted,  $('WhatsApp Trigger').item.json.messaging_product   , \"\") }}",
+              "rightValue": "whatsapp",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -736,
+        -16
+      ],
+      "id": "1a35d068-2ce1-4ef1-8977-cff3b5b58a40",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{$json.messages[0].text.body }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are a helpful real estate agent made to answer user queries, only based on the information available though query data tool about the company’s new projects. \nFirst step is to ask the user about his/her name and then only proceed with further conversation. Try to keep the answers concise and properly structured for easier readability and good impression from sales perspective."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -2416,
+        -384
+      ],
+      "id": "654f3aef-ccc3-4140-8c28-8de6f7302b70",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.messages[0].from }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -2336,
+        -176
+      ],
+      "id": "e86c9e24-891f-40d3-8d21-340f27e723f8",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session_id",
+              "name": "session_id",
+              "value": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+              "type": "string"
+            },
+            {
+              "id": "user_message",
+              "name": "user_message",
+              "value": "={{ $('WhatsApp Trigger').item.json.messages[0].text.body }}",
+              "type": "string"
+            },
+            {
+              "id": "ai_response",
+              "name": "ai_response",
+              "value": "={{ $('AI Agent1').item.json.output }}",
+              "type": "string"
+            },
+            {
+              "id": "timestamp",
+              "name": "timestamp",
+              "value": "={{ new Date().toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "formatted_time",
+              "name": "formatted_time",
+              "value": "={{ new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) }}",
+              "type": "string"
+            },
+            {
+              "id": "da1576ec-a61e-43c5-992b-d5352e84d129",
+              "name": "from_whatsapp",
+              "value": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1840,
+        -224
+      ],
+      "id": "a1541347-de41-41c6-b868-9fe11dc82c8e",
+      "name": "Extract Conversation Data"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fbb3e9b4-d9bd-445e-be25-fcf03ae34026",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -2976,
+        32
+      ],
+      "id": "be8ae6e3-173d-4831-8608-2f9e9c92bd95",
+      "name": "Webhook",
+      "webhookId": "fbb3e9b4-d9bd-445e-be25-fcf03ae34026"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -2496,
+        -160
+      ],
+      "id": "b9a7c4f5-cb4b-4847-9e13-fd92f48e5270",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "KEcaQpeVEPIHqFUS",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"response\": {{ $json.output .toJsonString()}}\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -1776,
+        304
+      ],
+      "id": "509e4243-91cf-4038-9a77-58bb7a615706",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"chatInput\": \"{{ $json.body.message }}\",\n  \"sessionId\": \"{{ $json.body.sessionId }}\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2688,
+        128
+      ],
+      "id": "4b1dfad3-e918-4a66-a086-dd2f7c3858be",
+      "name": "Input Fields"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -3584,
+        192
+      ],
+      "id": "b2a70b56-c89d-4f85-b12a-65f8269f2bdb",
+      "name": "Extract from File"
+    }
+  ],
+  "pinData": {
+    "Extract Conversation Data": [
+      {
+        "json": {
+          "ai_response": "this is ai repsonse"
+        }
+      }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "buritai.hopto.org",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+            "content-length": "124",
+            "accept": "application/json",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "en-US,en;q=0.9",
+            "content-type": "application/json",
+            "origin": "http://rea-buritai.duckdns.org",
+            "priority": "u=1, i",
+            "referer": "http://rea-buritai.duckdns.org/",
+            "sec-ch-ua": "\"Google Chrome\";v=\"141\", \"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"141\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "223.181.103.172",
+            "x-forwarded-host": "buritai.hopto.org",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "8ca81663e081",
+            "x-real-ip": "223.181.103.172"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "message": "hi",
+            "timestamp": "2025-11-01T08:52:40.708Z",
+            "sessionId": "session_1761986831708_ze8sq5pl7",
+            "source": "chat-widget"
+          },
+          "webhookUrl": "https://buritai.hopto.org/webhook/fbb3e9b4-d9bd-445e-be25-fcf03ae34026",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Vector Store": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Data Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "Query Data Tool",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store in Conversations Sheet": {
+      "main": [
+        [
+          {
+            "node": "Summary Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Conversation Data1": {
+      "main": [
+        [
+          {
+            "node": "Store in Conversations Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summary Agent": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lead Summary Update": {
+      "ai_tool": [
+        [
+          {
+            "node": "Summary Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Conversation": {
+      "ai_tool": [
+        [
+          {
+            "node": "Summary Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Summary Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final Output": {
+      "main": [
+        []
+      ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Final Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Extract Conversation Data",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Conversation Data": {
+      "main": [
+        [
+          {
+            "node": "Store in Conversations Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Input Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        []
+      ]
+    },
+    "Input Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "b8467233-7b9f-4838-ba4f-cfdc478c7bfe",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fe868f9b4855f439b9710d4e311530bda7c6175848b8d874ca42ed956ef7bb4c"
+  },
+  "id": "IYufVSDjykdCE9Ld",
+  "tags": []
+}
